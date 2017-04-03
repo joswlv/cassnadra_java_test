@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class InputModel {
     private String uid;
-    private String ageCode;
-    private String genderCode;
-    private String marriageCode;
-    private String CategoryCode;
+    private int ageCode;
+    private int genderCode;
+    private int marriageCode;
+    private int CategoryCode;
 }

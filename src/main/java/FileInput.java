@@ -1,20 +1,17 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jo_seungwan on 2017. 4. 1..
  */
 public class FileInput {
 
-    List<InputModel> uidDataSet = new ArrayList<>();
-    InputModel inputModel = new InputModel();
-
-    public List<InputModel> getUidData(String uidType) {
+    ArrayList<InputModel> uidDataSet = new ArrayList<>();
+    public ArrayList<InputModel> getUidData(String uidType) throws Exception {
         File uidFile = null;
 
-        File adidFile = new File("../resources/DataFile_Adid.txt");
-        File bidFile = new File("../resources/DataFile_Bid.txt");
+        File adidFile = new File(this.getClass().getClassLoader().getResource("DataFile_Adid.txt").toURI());
+        File bidFile = new File(this.getClass().getClassLoader().getResource("DataFile_Bid.txt").toURI());
         if (uidType.equals("adid")){
             uidFile = adidFile;
         } else {
@@ -27,12 +24,13 @@ public class FileInput {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(uidFile),"UTF-8"));
             String line;
             while ((line = br.readLine()) != null) {
-                String[] dataLine = line.split("\t");
+                String[] dataLine = line.split(",");
+                InputModel inputModel = new InputModel();
                 inputModel.setUid(dataLine[0]);
-                inputModel.setAgeCode(dataLine[1]);
-                inputModel.setGenderCode(dataLine[2]);
-                inputModel.setMarriageCode(dataLine[3]);
-                inputModel.setCategoryCode(dataLine[4]);
+                inputModel.setAgeCode(Integer.parseInt(dataLine[1]));
+                inputModel.setGenderCode(Integer.parseInt(dataLine[2]));
+                inputModel.setMarriageCode(Integer.parseInt(dataLine[3]));
+                inputModel.setCategoryCode(Integer.parseInt(dataLine[4]));
 
                 uidDataSet.add(inputModel);
             }

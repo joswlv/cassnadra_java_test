@@ -10,14 +10,15 @@ public class CassandraConnector {
     private Cluster cluster;
 
 
-    public void connect(String serverIP, String keyspace, Integer port) {
-
+    public void connect(String serverIP, String keyspace, String port, String username, String password) {
+        int ports = Integer.parseInt(port);
         Cluster.Builder b = Cluster.builder()
-                .addContactPoints(serverIP);
+                .addContactPoints(serverIP)
+                .withCredentials(username,password);
         if (port != null) {
-            b.withPort(port);
+            b.withPort(ports);
         }
-        Cluster cluster = b.build();
+        cluster = b.build();
 
         QueryLogger queryLogger = QueryLogger.builder(cluster).withConstantThreshold(300).build();
         cluster.register(queryLogger);

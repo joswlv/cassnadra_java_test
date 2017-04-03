@@ -1,5 +1,6 @@
 import com.datastax.driver.core.Session;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,44 +10,35 @@ import java.util.Date;
 public class Query {
 
     public static String getTodayStr() {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:SS").format(new Date());
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
-
+    final static Timestamp nowtime = new Timestamp(new Date().getTime());
     public void insertUserDemo(Session session, InputModel inputModel){
-        StringBuilder sb = new StringBuilder("INSERT INTO ")
-                .append(TableName.USER_DEMO).append("(uid, date, score, age_code, gender_code, marriage) ")
-                .append("VALUES (")
-                .append(inputModel.getUid())
-                .append(getTodayStr()).append(", '")
-                .append(inputModel.getAgeCode()).append(", '")
-                .append(inputModel.getGenderCode()).append(", '")
-                .append(inputModel.getMarriageCode()).append(", '")
-                .append("');");
-        String query = sb.toString();
-        session.execute(query);
+        final String query = "INSERT INTO user_demo (uid, date, score, age_code, gender_code, marriage) VALUES (?,?,?,?,?,?)";
+        session.execute(query,
+                inputModel.getUid(),
+                getTodayStr(),
+                3.5,
+                inputModel.getAgeCode(),
+                inputModel.getGenderCode(),
+                inputModel.getMarriageCode());
     }
 
     public void insertUser_Interest_Category(Session session, InputModel inputModel){
-        StringBuilder sb = new StringBuilder("INSERT INTO ")
-                .append(TableName.USER_INTREST_CATEGORY).append("(uid, date, score, category_id) ")
-                .append("VALUES (")
-                .append(inputModel.getUid())
-                .append(getTodayStr()).append(", '")
-                .append(inputModel.getCategoryCode()).append(", '")
-                .append("');");
-        String query = sb.toString();
-        session.execute(query);
+        final String query = "INSERT INTO user_interest_category (uid, date, score, category_id) VALUES (?,?,?,?)";
+        session.execute(query,
+                inputModel.getUid(),
+                getTodayStr(),
+                1,
+                inputModel.getCategoryCode());
     }
 
     public void insertUser_Interest_Category_App(Session session, InputModel inputModel){
-        StringBuilder sb = new StringBuilder("INSERT INTO ")
-                .append(TableName.USER_INTREST_CATEGORY_APP).append("(uid, date, score, category_id) ")
-                .append("VALUES (")
-                .append(inputModel.getUid())
-                .append(getTodayStr()).append(", '")
-                .append(inputModel.getCategoryCode()).append(", '")
-                .append("');");
-        String query = sb.toString();
-        session.execute(query);
+        final String query = "INSERT INTO user_interest_category_app (uid, date, score, category_id) VALUES (?,?,?,?)";
+        session.execute(query,
+                inputModel.getUid(),
+                getTodayStr(),
+                1,
+                inputModel.getCategoryCode());
     }
 }
