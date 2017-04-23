@@ -23,8 +23,10 @@ public class Run {
                 cassandraInfo.get("cassandra.password"));
         Session session = connector.getSession();
 
-        ArrayList<InputModel> adidData = fileInput.getUidData("adid");
-        ArrayList<InputModel> bidData = fileInput.getUidData("bid");
+        ArrayList<InputModel> adidData = new ArrayList<>();
+        ArrayList<InputModel> bidData = new ArrayList<>();
+        fileInput.getUidData("adid", adidData);
+        fileInput.getUidData("bid", bidData);
 
         for (InputModel adidInfo : adidData) {
             if ( adidInfo.getAgeCode() != -1 ) {
@@ -39,7 +41,7 @@ public class Run {
             if ( bidInfo.getAgeCode() != -1 ) {
                 query.insertUserDemo(session, bidInfo);
             }
-            if ( bidInfo.getAgeCode() != -1 ) {
+            if ( bidInfo.getCategoryCode() != -1 ) {
                 query.insertUser_Interest_Category(session, bidInfo);
             }
         }

@@ -6,8 +6,7 @@ import java.util.ArrayList;
  */
 public class FileInput {
 
-    ArrayList<InputModel> uidDataSet = new ArrayList<>();
-    public ArrayList<InputModel> getUidData(String uidType) throws Exception {
+    public void getUidData(String uidType, ArrayList<InputModel> uidDataSet) throws Exception {
         File uidFile = null;
 
         File adidFile = new File(this.getClass().getClassLoader().getResource("DataFile_Adid.txt").toURI());
@@ -47,8 +46,6 @@ public class FileInput {
                 e.printStackTrace();
             }
         }
-
-        return uidDataSet;
     }
 
 }
